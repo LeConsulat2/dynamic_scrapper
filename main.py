@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 import time
 from bs4 import BeautifulSoup
+import csv
 
 p = sync_playwright().start()
 
@@ -58,3 +59,21 @@ for job in jobs:
 
 print(jobs)
 print(len(jobs_db))    
+
+
+file = open("jobs.csv", mode= "w", encoding= "utf-8", newline ="")
+writer = csv.writer(file)
+writer.writerow(
+    [
+    "Title", 
+    "Company", 
+    "Location", 
+    "Reward", 
+    "Link",
+    ]
+)
+
+for job in jobs_db:
+    writer.writerow(job.values())
+
+file.close()
